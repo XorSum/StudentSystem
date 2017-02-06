@@ -104,7 +104,7 @@ int fun_1(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
     soft4[N].totalscore=0;
     for (i=0; i<*StuSum; i++)
         soft4[N].totalscore+=soft4[i].totalscore;
-    printf("Complited\n\n");
+    printf("Completed\n\n");
     return 0;
 }
 int fun_2(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
