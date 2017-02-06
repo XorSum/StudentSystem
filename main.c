@@ -5,7 +5,7 @@
 
 typedef struct
 {
-    int ID;
+    long long ID;
     char name[17];
     double score[6];
     double totalscore;
@@ -30,6 +30,32 @@ int menu()
     printf("Please enter your choice\n");
     return 0;
 }
+long long  readnum(long long low,long long high)
+{
+    long long ID;
+    char str[30];
+    while(1)
+    {
+        scanf("%s",str);
+        int flag=1,i;
+        for (i=0;i<30&&str[i]!='\0';i++)
+            if (str[i]>'9'||str[i]<'0')
+        {
+            flag=0;
+            break;
+        }
+        if (flag==0)
+            printf("error,please input again\n");
+        else
+        {
+            sscanf(str,"%lld",&ID);
+            if (ID>high||ID<low)
+                printf("error,please input again\n");
+            else break;
+        }
+    }
+    return ID;
+}
 int fun_0(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
 {
     exit(0);
@@ -40,7 +66,7 @@ int fun_1(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
     int i,j;
     printf("Please input the sum of course\n");
     printf(">_<:");
-    scanf("%d",CorSum);
+    *CorSum=(int)readnum(1,6);
     for (i=0; i<*CorSum; i++)
     {
         printf("Please input the NO.%d course's name\n",i+1);
@@ -49,7 +75,7 @@ int fun_1(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
     }
     printf("Please input the sum of student\n");
     printf(">_<:");
-    scanf("%d",StuSum);
+    *StuSum=(int)readnum(1,30);
     for (i=0; i<*StuSum; i++)
     {
         printf("Please input the NO.%d student's name\n",i+1);
@@ -57,7 +83,7 @@ int fun_1(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
         scanf("%s",soft4[i].name);
         printf("Please input the %s's ID\n",soft4[i].name);
         printf(">_<:");
-        scanf("%d",&soft4[i].ID);
+        soft4[i].ID=readnum(1,10000000000);
         for (j=0; j<*CorSum; j++)
         {
             printf("Please input %s's score of %s\n",soft4[i].name,coursename[j]);
@@ -113,7 +139,7 @@ int fun_4(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
     printf("student name    total score         ID       \n");
     printf("---------------------------------------------\n");
     for (i=*StuSum-1; i>=0; i--)
-        printf("%-16s%-20.2lf%-20d\n",soft4[i].name,soft4[i].totalscore,soft4[i].ID);
+        printf("%-16s%-20.2lf%-20lld\n",soft4[i].name,soft4[i].totalscore,soft4[i].ID);
     return 0;
 }
 int fun_5(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
@@ -124,7 +150,7 @@ int fun_5(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
     printf("student name    total score         ID       \n");
     printf("---------------------------------------------\n");
     for (i=0; i<*StuSum; i++)
-        printf("%-16s%-20.2lf%-20d\n",soft4[i].name,soft4[i].totalscore,soft4[i].ID);
+        printf("%-16s%-20.2lf%-20lld\n",soft4[i].name,soft4[i].totalscore,soft4[i].ID);
     return 0;
 }
 int cmp_ID(const void*a,const void*b)
@@ -139,7 +165,7 @@ int fun_6(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
     printf("ID              name           total score\n");
     printf("------------------------------------------\n");
     for (i=0; i<*StuSum; i++)
-        printf("%-16d%-16s%-6.2lf\n",soft4[i].ID,soft4[i].name,soft4[i].totalscore);
+        printf("%-16lld%-16s%-6.2lf\n",soft4[i].ID,soft4[i].name,soft4[i].totalscore);
     return 0;
 }
 int cmp_name(const void*a,const void*b)
@@ -154,28 +180,30 @@ int fun_7(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
     printf("name            ID           total score\n");
     printf("----------------------------------------\n");
     for (i=0; i<*StuSum; i++)
-        printf("%-16s%-13d%-6.2lf\n",soft4[i].name,soft4[i].ID,soft4[i].totalscore);
+        printf("%-16s%-13lld%-6.2lf\n",soft4[i].name,soft4[i].ID,soft4[i].totalscore);
     return 0;
 }
 int fun_8(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
 {
     //Search by ID
-    int num,i,j,flag=0;
+    int i,j,flag=0;
+    long long tmpID;
     printf("please input the ID\n>_<:");
-    scanf("%d",&num);
+    tmpID=readnum(1,10000000000);
     for (i=0; i<*StuSum; i++)
-        if(soft4[i].ID==num)
+        if(soft4[i].ID==tmpID)
         {
             flag=1;
             break;
         }
     if (flag==0)
-        printf("the ID you input is wrong\n");
+        printf("no student have the ID of %lld\n",tmpID);
     else
     {
         printf("name:   %s\n",soft4[i].name);
-        printf("total score:    %-4.2lf\n",soft4[i].totalscore);
+        printf("course           score\n");
         printf("-----------------------\n");
+        printf("total           %-4.2lf\n",soft4[i].totalscore);
         for (j=0;j<*CorSum;j++)
             printf("%-16s%-4.2lf\n",coursename[j],soft4[i].score[j]);
     }
@@ -198,9 +226,10 @@ int fun_9(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
         printf("%s is not in this class\n",name);
     else
     {
-        printf("ID:   %d\n",soft4[i].ID);
-        printf("total score:    %-4.2lf\n",soft4[i].totalscore);
+        printf("ID:   %lld\n",soft4[i].ID);
+        printf("course           score\n");
         printf("-----------------------\n");
+        printf("total           %-4.2lf\n",soft4[i].totalscore);
         for (j=0;j<*CorSum;j++)
             printf("%-16s%-5.2lf\n",coursename[j],soft4[i].score[j]);
     }
@@ -276,7 +305,7 @@ int fun_12(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
         fprintf(fp,"%s\n",coursename[j]);
     for (i=0; i<*StuSum; i++)
     {
-        fprintf(fp,"%s %d",soft4[i].name,soft4[i].ID);
+        fprintf(fp,"%s %lld",soft4[i].name,soft4[i].ID);
         fprintf(fp," %lf",soft4[i].totalscore);
         for (j=0; j<*CorSum; j++)
             fprintf(fp," %lf",soft4[i].score[j]);
@@ -307,7 +336,7 @@ int fun_13(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
         fscanf(fp,"%s\n",coursename[j]);
     for (i=0; i<*StuSum; i++)
     {
-        fscanf(fp,"%s %d",soft4[i].name,&soft4[i].ID);
+        fscanf(fp,"%s %lld",soft4[i].name,&soft4[i].ID);
         fscanf(fp,"%lf",&soft4[i].totalscore);
         for (j=0; j<*CorSum; j++)
             fscanf(fp,"%lf",&soft4[i].score[j]);
@@ -326,7 +355,7 @@ int fun_13(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
 --------------------------------------------------------\n");
     for (i=0; i<*StuSum; i++)
     {
-        printf("%-16s%-8d",soft4[i].name,soft4[i].ID);
+        printf("%-16s%-8lld",soft4[i].name,soft4[i].ID);
         printf("%-16.2lf",soft4[i].totalscore);
         for (j=0; j<*CorSum; j++)
             printf("%-16.2lf",soft4[i].score[j]);
@@ -345,11 +374,8 @@ fun_4,fun_5,fun_6,fun_7,fun_8,fun_9,fun_10,fun_11,fun_12,fun_13};
     while(1)
     {
         printf(">_<:");
-        scanf("%d",&cmd);
-        if (cmd<=13||cmd>=0)
-            (p[cmd])(soft4,&StuSum,&CorSum,coursename);
-        else
-            printf("Please input correct command\n");
+        cmd=(int)readnum(0,13);
+        (p[cmd])(soft4,&StuSum,&CorSum,coursename);
     }
     return 0;
 }
