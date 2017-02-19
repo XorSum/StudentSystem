@@ -36,6 +36,7 @@ long long  readnum(long long low,long long high)
     char str[30];
     while(1)
     {
+        printf(">_<:");
         scanf("%s",str);
         int flag=1,i;
         for (i=0;i<30&&str[i]!='\0';i++)
@@ -65,7 +66,6 @@ int fun_1(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
     // Input record
     int i,j;
     printf("Please input the sum of course\n");
-    printf(">_<:");
     *CorSum=(int)readnum(1,6);
     for (i=0; i<*CorSum; i++)
     {
@@ -74,7 +74,6 @@ int fun_1(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
         scanf("%s",coursename[i]);
     }
     printf("Please input the sum of student\n");
-    printf(">_<:");
     *StuSum=(int)readnum(1,30);
     for (i=0; i<*StuSum; i++)
     {
@@ -82,7 +81,6 @@ int fun_1(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
         printf(">_<:");
         scanf("%s",soft4[i].name);
         printf("Please input the %s's ID\n",soft4[i].name);
-        printf(">_<:");
         soft4[i].ID=readnum(1,10000000000);
         for (j=0; j<*CorSum; j++)
         {
@@ -188,7 +186,7 @@ int fun_8(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
     //Search by ID
     int i,j,flag=0;
     long long tmpID;
-    printf("please input the ID\n>_<:");
+    printf("please input the ID\n");
     tmpID=readnum(1,10000000000);
     for (i=0; i<*StuSum; i++)
         if(soft4[i].ID==tmpID)
@@ -373,7 +371,6 @@ fun_4,fun_5,fun_6,fun_7,fun_8,fun_9,fun_10,fun_11,fun_12,fun_13};
     menu();
     while(1)
     {
-        printf(">_<:");
         cmd=(int)readnum(0,13);
         (p[cmd])(soft4,&StuSum,&CorSum,coursename);
     }
