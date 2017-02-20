@@ -41,10 +41,10 @@ long long  readnum(long long low,long long high)
         int flag=1,i;
         for (i=0;i<30&&str[i]!='\0';i++)
             if (str[i]>'9'||str[i]<'0')
-        {
-            flag=0;
-            break;
-        }
+            {
+                flag=0;
+                break;
+            }
         if (flag==0)
             printf("error,please input again\n");
         else
@@ -188,6 +188,7 @@ int fun_8(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
     long long tmpID;
     printf("please input the ID\n");
     tmpID=readnum(1,10000000000);
+    qsort(soft4,*StuSum,sizeof(Student),cmp_totalscore);
     for (i=0; i<*StuSum; i++)
         if(soft4[i].ID==tmpID)
         {
@@ -198,7 +199,8 @@ int fun_8(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
         printf("no student have the ID of %lld\n",tmpID);
     else
     {
-        printf("name:   %s\n",soft4[i].name);
+        printf("name:     %s\n",soft4[i].name);
+        printf("rank:     %d\n",i+1);
         printf("course           score\n");
         printf("-----------------------\n");
         printf("total           %-4.2lf\n",soft4[i].totalscore);
@@ -214,6 +216,7 @@ int fun_9(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
     char name[17];
     printf("please input the name\n>_<:");
     scanf("%s",name);
+    qsort(soft4,*StuSum,sizeof(Student),cmp_totalscore);
     for (i=0; i<*StuSum; i++)
         if(strcmp(soft4[i].name,name)==0)
         {
@@ -224,7 +227,8 @@ int fun_9(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
         printf("%s is not in this class\n",name);
     else
     {
-        printf("ID:   %lld\n",soft4[i].ID);
+        printf("ID:       %lld\n",soft4[i].ID);
+        printf("rank:     %d\n",i+1);
         printf("course           score\n");
         printf("-----------------------\n");
         printf("total           %-4.2lf\n",soft4[i].totalscore);
@@ -312,7 +316,7 @@ int fun_12(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
     fprintf(fp,"total :");
     fprintf(fp," %lf",soft4[N].totalscore);
     for (j=0; j<*CorSum; j++)
-            fprintf(fp," %lf",soft4[N].score[j]);
+        fprintf(fp," %lf",soft4[N].score[j]);
     fprintf(fp,"\n");
     fclose(fp);
     printf("successful\n");
@@ -343,7 +347,7 @@ int fun_13(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
     fscanf(fp,"total :");
     fscanf(fp,"%lf",&soft4[i].totalscore);
     for (j=0; j<*CorSum; j++)
-            fscanf(fp,"%lf",&soft4[N].score[j]);
+        fscanf(fp,"%lf",&soft4[N].score[j]);
     fclose(fp);
     printf("name           ID       total score     ");
     for (j=0; j<*CorSum; j++)
