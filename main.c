@@ -367,7 +367,7 @@ int fun_13(Student soft4[],int*StuSum,int *CorSum,char coursename[][17])
 }
 int main()
 {
-    int cmd=0,CorSum,StuSum;
+    int cmd=0,CorSum=0,StuSum=0;
     Student soft4[N+1];
     char coursename[6][17];
     int (*p[14])(Student*,int*,int*,char[][17])={fun_0,fun_1,fun_2,fun_3,\
